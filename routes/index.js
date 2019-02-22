@@ -6,7 +6,7 @@ var linkQuery = require('../DAO/links.js');
 module.exports = function (app) {
 
 	router.get('/links', function(req, res, next) {
-		linkQuery.getLinksList(app.db.client)
+		linkQuery.getLinksList(app.dbClient)
 		.then(function(linksList) {
 			return res.status(200).send(linksList);
 		}).catch(function(err) {
@@ -18,12 +18,12 @@ module.exports = function (app) {
 		if (req.body.link) {
 			var uid = uniqid();
 			var obj = {
-				'short-link': uid,
+				'short-link': 'http://localhost/' + uid,
 				'link': req.body.link
 			}
-			linkQuery.findOrInsertLink(app.db.client, obj)
-			.then(function(res) {
-				return res.status(200).send(linksList);
+			linkQuery.findOrInsertLink(app.dbClient, obj)
+			.then(function(response) {
+				return res.status(200).send();
 			}).catch(function(err) {
 				return res.status(400).send(err);
 			});
@@ -32,7 +32,14 @@ module.exports = function (app) {
 		}
 	});
 
-	router.get('/links/:link', function(req, res, next) {
-
+	router.put('/links', function(req, res, next) {
+		linkQuery.updateCount(app.dbClient, req.body['short-link'])
+		.then(function(response) {
+			return res.status(200).send();
+		}).catch(function(err) {
+			return res.status(400).send(err);
+		});
 	});
+
+	return router;
 };

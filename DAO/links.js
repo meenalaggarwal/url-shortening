@@ -2,7 +2,6 @@ var Promise = require("bluebird");
 
 module.exports.getLinksList = function(dbClient) {
 	return new Promise(function (resolve, reject) {
-		// Get the documents collection
 		var collection = dbClient.collection('linksDetails');
 		collection.find().toArray(function(err, result) {
 			if (err) {
@@ -20,7 +19,7 @@ module.exports.getLinksList = function(dbClient) {
 			}
 		});
 	});	
-}
+};
 
 
 module.exports.findOrInsertLink = function(dbClient, linkObj) {
@@ -40,6 +39,19 @@ module.exports.findOrInsertLink = function(dbClient, linkObj) {
 						return resolve({bAlreadyExists: false});
 					}
 				});
+			}
+		});
+	});
+};
+
+module.exports.updateCount = function(dbClient, shortLink) {
+	return new Promise(function (resolve, reject) {
+		var collection = dbClient.collection('linksDetails');
+		collection.update({'short-link': shortLink}, { $inc: {'hit-count': 1} }, function(err, result) {
+			if (err) {
+				return reject(err);
+			} else {
+				return resolve();
 			}
 		});
 	});

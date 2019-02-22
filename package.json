@@ -15,6 +15,7 @@
     "request": "*",
     "bluebird": "*",
     "hbs": "*",
-    "uniqid": "*"
+    "uniqid": "*",
+    "mongodb": "*"
   }
 }

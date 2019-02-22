@@ -1,0 +1,38 @@
+{{> header}}
+
+  <article id='body' class='section'>
+        <div class="container">
+            <div class="page-heading center">
+                <h1>URL-Shortening</h1>
+            </div>
+        {{#if error}}
+            <p> {{error}} </p>
+        {{else}}
+            </br></br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6" id="link-list">
+                        <label class="form-label"><b>URL List</b></label>
+                        {{#each this}}
+                        <div>
+                            <a href="{{link}}" target="_blank" data-value="{{short-link}}">{{short-link}}</a> {{hit-count}}
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label"><b>Enter a URL</b></label>
+                        <div>
+                            <input type='text' id='url'/>
+                        </div>
+                        </br>
+                        <div>
+                            <button type="button" class="btn btn-primary" id="shorten">Shorten URL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+        </div>
+    </article>
+
+{{> footer}}

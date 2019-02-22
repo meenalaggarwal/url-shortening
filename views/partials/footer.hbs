@@ -1,0 +1,38 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script>
+	$("#shorten").click(function() {
+		var link = $("#url").val();
+		$.ajax({
+		    url: '',
+		    method: 'POST',
+		    data: { link: link },
+		    dataType: 'json',
+		    success: function(data) {
+		    	
+		    },
+		    error: function(jqXHR, status, err) {
+		    	
+		    }
+		});
+	});
+
+	$("a").click(function() {
+		$.ajax({
+		    url: '/links',
+		    method: 'PUT',
+		    data: { 'short-link': $(this).data("value") },
+		    dataType: 'json',
+		    success: function(data) {
+		    	
+		    },
+		    error: function(jqXHR, status, err) {
+		    	
+		    }
+		});
+	});
+</script>
+</body>
+
+</html>
