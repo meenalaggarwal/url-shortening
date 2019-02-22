@@ -12,17 +12,17 @@ var API = require('./API/index');
 
 var config = require('./config');
 
-var dbClient;
+var db = { client: null};
 
 require('./DAO/dbConnection.js')(config.db)
 .then(function(response) {
-	dbClient = response;
+	db.client = response;
 }).catch(function(err) {
 	throw 'Unable to connect to DB';
 });
 
 var app = express();
-
+app.db = db;
 // view engine setup
 app.set('views', path.join(__dirname, 'views/layouts'));
 app.set('view engine', 'hbs');
@@ -34,8 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/v1', indexRouter);
-app.use('/v1/links', linksRouter);
+app.use('/v1', indexRouter(app));
 
 app.use('/', API);
 
