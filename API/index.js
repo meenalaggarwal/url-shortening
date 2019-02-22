@@ -30,7 +30,7 @@ router.post('/links', function(req, res, next) {
 			headers: { 'content-type' : 'application/json' },
 			url:  config.url + '/v1/links',
 			json: {
-				data: req.body.link
+				data: { link : req.body.link}
 			}
 		}, function (error, response, body) {
 			if (response.statusCode === 200) {
